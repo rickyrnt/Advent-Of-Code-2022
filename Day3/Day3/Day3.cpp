@@ -6,19 +6,38 @@
 #include <vector>
 #include <fstream>
 #include <algorithm>
+#include <bitset>
 
 using namespace std;
 
 int getVal(char a);
+void indexChars(string chars, bitset<52>& bits);
 
 int main()
 {
     int score = 0;
     ifstream input("input.txt");
     string line, ln2, ln3;
+    bitset<52> bits1, bits2, bits3, out;
 
     if (input.is_open()) {
-        //part two
+        //down at the bottom is my initial O(n^2) solution. Now I will implement the O(n) solution for part 2 just for fun
+        while (getline(input, line)) {
+            getline(input, ln2);
+            getline(input, ln3);
+
+            indexChars(line, bits1);
+            indexChars(ln2, bits2);
+            indexChars(ln3, bits3);
+
+            out = bits1 & bits2 & bits3;
+            for (int i = 0; i < 52; i++) {
+                if (out[i])
+                    score += i + 1;
+            }
+        }
+        cout << score;
+    /*    //part two
 
     funny:
         while (getline(input, line)) {
@@ -64,4 +83,12 @@ int getVal(char a) {
     if (a >= 97) {
         return a - 96;
     } else return a - 38;
+}
+
+void indexChars(string chars, bitset<52>& bits) {
+    //i wrote 'em all out just for fun
+    bits = 0b0000000000000000000000000000000000000000000000000000;
+
+    for (int i = 0; i < chars.length(); i++)
+        bits[getVal(chars[i] - 1)] = 1;
 }
