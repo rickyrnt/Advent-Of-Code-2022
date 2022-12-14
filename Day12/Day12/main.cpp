@@ -124,8 +124,8 @@ int main() {
 					if (curr->nodeTo->cost > currNode->cost + 1) {
 						curr->nodeTo->cost = currNode->cost + 1;
 						curr->nodeTo->totalCost = curr->nodeTo->cost + abs(end.first - curr->nodeTo->coords.first + end.second - curr->nodeTo->coords.second);
-						curr->nodeTo->parent = currNode;
 						//curr->nodeTo->totalCost = curr->nodeTo->cost;
+						curr->nodeTo->parent = currNode;
 					}
 					curr = curr->next;
 				}
